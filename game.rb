@@ -16,12 +16,28 @@ class Game
     end
   end
 
+  def guess_compare(guess, code)
+    i = 0
+    correct_spot = 0
+    other_spot = 0
+    for char in code.split('')
+      if char == guess[i]
+        correct_spot += 1
+      elsif guess.include?(char)
+        other_spot += 1
+      end
+      i += 1
+    end
+    puts "You have guessed #{correct_spot} correct spots and #{other_spot} in another location"
+    false
+  end
+  
   def player_feedback(guess)
     if guess == @code
       puts "YOU WIN!"
       true
     elsif guess != @code
-
+      guess_compare(guess, @code)
     else
       false
     end
@@ -43,5 +59,5 @@ class Game
   end
 end
 
-new_game = Game.new(4)
+new_game = Game.new(12)
 new_game.start
