@@ -5,6 +5,7 @@ class Game
   include SupportFunctions
 
   attr_reader :turns, :length, :range, :code, :guess
+
   def initialize(turns, length, range)
     @turns = turns
     @length = length
@@ -13,6 +14,17 @@ class Game
     @guess = ''
   end
 
+  def start_option
+    puts 'Would you like to (1) create the secret code or (2) guess'
+    answer = ''
+    loop do
+      answer = gets.chomp
+      break if answer == '1' || answer == '2'
+
+      puts "INVALID INPUT"
+    end
+    answer
+  end
 
   def start
     turns.times do
@@ -39,4 +51,4 @@ class Game
 end
 
 new_game = Game.new(4, 4, 6)
-new_game.start
+p new_game.start_options

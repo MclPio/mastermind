@@ -15,7 +15,7 @@ module SupportFunctions
     for char in code.split('')
       if char == guess[i]
         correct_spot += 1
-      elsif guess.include?(char) && 
+      elsif guess.include?(char)
         other_spot += 1
       end
       i += 1
