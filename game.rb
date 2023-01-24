@@ -23,7 +23,17 @@ class Game
 
       puts "INVALID INPUT"
     end
-    answer
+    player_role(answer)
+  end
+
+  def player_role(role)
+    case
+    when role == '1'
+      @code = gets.chomp
+      start
+    when role == '2'
+      start
+    end
   end
 
   def start
@@ -51,4 +61,4 @@ class Game
 end
 
 new_game = Game.new(4, 4, 6)
-p new_game.start_options
+new_game.start_option
