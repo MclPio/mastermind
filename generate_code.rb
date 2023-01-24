@@ -4,6 +4,7 @@ module GenerateCode
     length.times do
       code += rand(1..range).to_s
     end
+    puts code
     code
   end
 end
