@@ -27,11 +27,11 @@ class Game
   end
 
   def player_role(role)
-    case
-    when role == '1'
+    case role
+    when '1'
       @code = gets.chomp
       start
-    when role == '2'
+    when '2'
       start
     end
   end
