@@ -4,7 +4,7 @@ module SupportFunctions
     length.times do
       code += rand(1..range).to_s
     end
-    puts code
+    code = "2111".split("")
     code
   end
 
@@ -12,7 +12,7 @@ module SupportFunctions
     i = 0
     correct_spot = 0
     other_spot = 0
-    for char in code.split('')
+    for char in code
       if char == guess[i]
         correct_spot += 1
       elsif guess.include?(char)

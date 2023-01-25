@@ -30,7 +30,8 @@ class Game
     case role
     when '1'
       @code = gets.chomp
-      start
+      puts "computer starts guessing"
+      # will need to change start_computer so computer can guess
     when '2'
       start
     end
@@ -58,7 +59,41 @@ class Game
       false
     end
   end
+
+  def computer_guess_result(guess)
+    correct = 0
+    correct_different_index = 0
+    item_taken = []
+    puts "guess: #{guess}"
+    puts "code:  #{code}"
+    guess.each_with_index do |item, idx|
+      if item == code[idx]
+        correct += 1
+        item_taken << idx
+        # puts "correct #{item} #{idx}"
+      else
+        code.each_with_index do |code_value, code_index|
+          if item == code_value && guess[code_index] != code_value && !item_taken.include?(code_index)
+            correct_different_index += 1
+            # puts "correct_different_index #{idx} #{code_index}"
+            item_taken << code_index
+            break
+          end
+        end
+      end
+    end
+    puts "C:#{correct} and CD:#{correct_different_index}"
+    result_of_guess = [correct, correct_different_index]
+  end
+
+  def computer_guess()
+    set = Array(1111..6666)
+    guess = set.delete(1122).to_s.split('')
+    computer_guess_result(guess)
+
+    #set.filter { |item| }
+  end
 end
 
 new_game = Game.new(4, 4, 6)
-new_game.start_option
+new_game.computer_guess
