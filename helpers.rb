@@ -38,7 +38,7 @@ module Helpers
     guess = ''
     loop do
       guess = gets.chomp
-      if guess.length == @code.length && guess.scan(/\D/).empty?
+      if guess.length == code.length && guess.scan(/\D/).empty?
         break
       else
         puts 'Please enter a valid input'
@@ -46,6 +46,36 @@ module Helpers
       end
     end
     guess
+  end
+
+  def create_code
+    loop do
+      code = gets.chomp.split('')
+      if code.length == length && code.join('').scan(/\D/).empty?
+        if code.include?('7') || code.include?('8') || code.include?('9') || code.include?('0')
+          puts 'Please enter numbers between 1-6'
+          next
+        else
+          break
+        end
+      else
+        puts 'Please enter a valid input'
+        next
+      end
+    end
+    code
+  end
+
+  def player_feedback(guess)
+    if guess.split('') == code
+      puts 'YOU WIN!'
+      true
+    elsif guess != code
+      guess_compare(guess)
+      false
+    else
+      false
+    end
   end
 
   def create_set

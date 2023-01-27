@@ -3,8 +3,8 @@ require_relative 'helpers'
 class Game
   include Helpers
 
-  attr_reader :length, :range, :code, :guess
-  attr_accessor :turns
+  attr_reader :length, :range
+  attr_accessor :turns, :guess, :code
 
   def initialize(turns, length = 4, range = 6)
     @turns = turns
@@ -14,7 +14,7 @@ class Game
     @guess = ''
   end
 
-  def start_option
+  def start
     puts 'Would you like to (1) create the secret code or (2) guess'
     answer = ''
     loop do
@@ -29,36 +29,24 @@ class Game
   def player_role(role)
     case role
     when '1'
-      @code = gets.chomp
+      self.code = create_code
       puts "computer starts guessing"
       # will need to change start_computer so computer can guess
     when '2'
-      start
+      start_guessing
     end
   end
 
   def start_guessing
     p code
     turns.times do
-      @guess = guess_input(code, range, turns)
-      break if player_feedback(@guess)
+      self.guess = guess_input(code, range, turns)
+      break if player_feedback(guess)
 
       self.turns -= 1
     end
     if turns == 0
-      puts "YOU LOSE!"
-    end
-  end
-
-  def player_feedback(guess)
-    if guess.split('') == @code
-      puts "YOU WIN!"
-      true
-    elsif guess != @code
-      guess_compare(guess)
-      false
-    else
-      false
+      puts 'YOU LOSE!'
     end
   end
 
@@ -126,4 +114,4 @@ class Game
 end
 
 new_game = Game.new(12)
-new_game.start_guessing
+new_game.start
