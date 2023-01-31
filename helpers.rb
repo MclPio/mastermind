@@ -7,7 +7,7 @@ module Helpers
     code.split('')
   end
 
-  def guess_compare(guess)
+  def guess_compare(guess, code = @code)
     correct = 0
     correct_different_index = 0
     item_taken = []
@@ -28,10 +28,33 @@ module Helpers
         end
       end
     end
-    puts "C:#{correct} and CD:#{correct_different_index}"
+    "C:#{correct} and CD:#{correct_different_index}"
     [correct, correct_different_index]
   end
 
+  def guess_compare_computer(guess, code = @code)
+    correct = 0
+    correct_different_index = 0
+    item_taken = []
+    correct_guess = []
+    guess.split('').each_with_index do |item, idx|
+      if item == code[idx]
+        correct += 1
+        item_taken << idx
+        correct_guess[idx] = item
+      else
+        correct_guess[idx] = 'X'
+        code.each_with_index do |code_value, code_index|
+          if item == code_value && guess[code_index] != code_value && !item_taken.include?(code_index)
+            correct_different_index += 1
+            item_taken << code_index
+            break
+          end
+        end
+      end
+    end
+    "C:#{correct} and CD:#{correct_different_index}"
+  end
 
   def guess_input(code,range,turns)
     puts "Enter guess, length: #{code.length} range: 1-#{range}, turns: #{turns}"
@@ -49,6 +72,7 @@ module Helpers
   end
 
   def create_code
+    code = ''
     loop do
       code = gets.chomp.split('')
       if code.length == length && code.join('').scan(/\D/).empty?
@@ -71,10 +95,46 @@ module Helpers
       puts 'YOU WIN!'
       true
     elsif guess != code
-      guess_compare(guess)
+      p guess_compare_computer(guess)
       false
     else
       false
+    end
+  end
+
+  def computer_feedback(guess)
+    if guess.split('') == code
+      puts 'COMPUTER WINS!'
+      true
+    elsif guess != code
+      guess_compare_computer(guess)
+      false
+    else
+      false
+    end   
+  end
+  def start_guessing
+    turns.times do
+      self.guess = guess_input(code, range, turns)
+      break if player_feedback(guess)
+
+      self.turns -= 1
+    end
+    if turns == 0
+      puts 'YOU LOSE!'
+    end
+  end
+
+  def player_role(role)
+    case role
+    when '1'
+      puts "create a code between 1-6"
+      @code = create_code
+      puts "computer starts guessing"
+      computer_guess
+      # will need to change start_computer so computer can guess
+    when '2'
+      start_guessing
     end
   end
 
