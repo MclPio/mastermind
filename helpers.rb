@@ -7,6 +7,7 @@ module Helpers
     code.split('')
   end
 
+  # used for the set filter that computer uses
   def guess_compare(guess, code = @code)
     correct = 0
     correct_different_index = 0
@@ -32,6 +33,7 @@ module Helpers
     [correct, correct_different_index]
   end
 
+  # used for the string output for both computer and player feedback
   def guess_compare_computer(guess, code = @code)
     correct = 0
     correct_different_index = 0
@@ -56,6 +58,7 @@ module Helpers
     "C:#{correct} and CD:#{correct_different_index}"
   end
 
+  # makes sure player input is using correct digits
   def guess_input(code,range,turns)
     puts "Enter guess, length: #{code.length} range: 1-#{range}, turns: #{turns}"
     guess = ''
@@ -71,6 +74,7 @@ module Helpers
     guess
   end
 
+  # takes code from player using gets
   def create_code
     code = ''
     loop do
@@ -102,17 +106,18 @@ module Helpers
     end
   end
 
-  def computer_feedback(guess)
+  def computer_feedback(guess, attempts)
     if guess.split('') == code
-      puts 'COMPUTER WINS!'
+      puts "COMPUTER WINS! in #{attempts} turns"
       true
     elsif guess != code
       guess_compare_computer(guess)
       false
     else
       false
-    end   
+    end
   end
+
   def start_guessing
     turns.times do
       self.guess = guess_input(code, range, turns)

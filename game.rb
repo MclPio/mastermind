@@ -27,12 +27,11 @@ class Game
   end
 
   def computer_guess
-    # use guess_compare(guess) to get feedback which is [correct, correct_different_index]
-    # use computer_feedback as it will call guesscompare... returns true (correct) or false
     set = create_set
     initial_guess = '1122'
-    p initial_guess
+    p "Computer guesses #{initial_guess}"
     p guess_compare_computer(initial_guess)
+    attempts = 1
     loop do
       guess_feedback = guess_compare(initial_guess)
       filter_same_feedback = set.filter do |item|
@@ -49,9 +48,10 @@ class Game
       end
       set = filter_same_feedback
       initial_guess = (g_hash.min_by{|k,v| v})[0].to_s
-      p initial_guess
+      p "Computer guesses #{initial_guess}"
       p guess_compare_computer(initial_guess)
-      break if computer_feedback(initial_guess)
+      attempts += 1
+      break if computer_feedback(initial_guess, attempts)
     end
   end
 end
